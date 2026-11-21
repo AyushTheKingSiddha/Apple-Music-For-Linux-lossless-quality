@@ -58,13 +58,19 @@ persist.waydroid.multi_windows = true
 EOF
 # Firewall and Docker block Android's internet by default.
 if sudo ufw status 2>/dev/null | grep -q "Status: active"; then
-  sudo ufw allow 53; sudo ufw allow 67; sudo ufw default allow FORWARD
+  # Only Waydroid's interface: DNS/DHCP in, and routing in/out.
+  sudo ufw allow in on waydroid0 to any port 53
+  sudo ufw allow in on waydroid0 to any port 67
+  sudo ufw route allow in on waydroid0
+  sudo ufw route allow out on waydroid0
 fi
-if systemctl list-unit-files docker.service >/dev/null 2>&1 && command -v docker >/dev/null; then
+if command -v docker >/dev/null; then
+  # Docker drops forwarded traffic; let only waydroid0 through via DOCKER-USER (re-added on every Docker start).
+  RULES='iptables -C DOCKER-USER -i waydroid0 -j ACCEPT 2>/dev/null || iptables -I DOCKER-USER -i waydroid0 -j ACCEPT; iptables -C DOCKER-USER -o waydroid0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 2>/dev/null || iptables -I DOCKER-USER -o waydroid0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT'
   sudo mkdir -p /etc/systemd/system/docker.service.d
-  printf '[Service]\nExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT\n' | sudo tee /etc/systemd/system/docker.service.d/waydroid-forward.conf >/dev/null
+  printf '[Service]\nExecStartPost=/bin/sh -c "%s"\n' "$RULES" | sudo tee /etc/systemd/system/docker.service.d/waydroid-forward.conf >/dev/null
   sudo systemctl daemon-reload
-  sudo iptables -P FORWARD ACCEPT
+  sudo sh -c "$RULES" || true  # DOCKER-USER exists only while Docker runs; the drop-in covers the next start
 fi
 
 say "Step 4/6: Applying settings"
