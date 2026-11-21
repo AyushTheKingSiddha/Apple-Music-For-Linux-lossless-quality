@@ -1,0 +1,72 @@
+APPLE MUSIC (LOSSLESS) ON UBUNTU
+=================================
+
+You need:
+- Ubuntu with an Apple Music subscription
+- Internet, about 3 GB free space, and 20 minutes
+- This folder, containing setup.sh and GUIDE.txt
+- The Apple Music 4.7.0 .apk file (see next step)
+
+
+GET APPLE MUSIC 4.7.0
+---------------------
+Newer versions refuse to sign in on Linux, so you need exactly 4.7.0.
+1. Open  https://www.apkmirror.com/apk/apple/apple-music/apple-music-4-7-0-release/
+2. Pick the stable 4.7.0 (not "beta") with "x86_64" in the variant (nodpi).
+3. Ignore the big ad buttons; use the real "Download APK" button.
+4. Move the downloaded .apk file into this folder, next to setup.sh.
+
+Note: lossless works up to 24-bit/48 kHz. Hi-Res (96/192 kHz) is not possible on Linux.
+
+
+BEFORE YOU START: set a password on your Apple account
+-------------------------------------------------------
+This Apple Music version asks for an email AND a password.
+If you always signed in with just an email code, you have no password yet:
+1. In your browser, open  https://account.apple.com
+2. Click "Forgot password?" and enter your email.
+3. Follow the steps to set a password. Remember it.
+
+
+RUN THE SCRIPT
+--------------
+1. Put this folder in your Home folder (the folder named after you).
+2. Right-click inside the folder and choose "Open in Terminal".
+3. Type this and press Enter:
+
+       bash setup.sh
+
+4. Type your laptop password when asked. Nothing shows on screen while
+   you type a password; that is normal. Press Enter.
+5. Wait. Green lines show progress. When it says "All done!", it worked.
+   If you see red "ERROR", read the message: it says what to do.
+   If you're still stuck, send a photo of the screen to whoever gave you this.
+
+
+AFTER THE SCRIPT
+----------------
+1. Open "Apple Music" from your app menu.
+2. Sign in with your Apple account email and the password from above.
+   If it asks for a 6-digit code, enter the code sent to your phone or email.
+3. In Apple Music, tap the three dots (top right) > Settings > Audio Quality:
+   turn on "Lossless" for streaming and downloads.
+
+IMPORTANT: never update Apple Music. Newer versions refuse to sign in on Linux.
+If the Play Store ever opens, search Apple Music, tap the three dots (top right),
+and untick "Enable auto update".
+
+
+EVERY DAY
+---------
+Just open "Apple Music" from the app menu. Nothing else is needed.
+The first launch after a restart can take a minute.
+
+
+IF SOMETHING BREAKS
+-------------------
+- Black screen or won't open: restart the laptop and try again.
+- "You're offline" in Apple Music: open Terminal and run
+      sudo iptables -P FORWARD ACCEPT
+  then close and reopen Apple Music.
+- To remove everything:
+      waydroid session stop; sudo apt remove waydroid; sudo rm -rf /var/lib/waydroid ~/.local/share/waydroid
