@@ -42,4 +42,8 @@ sudo rm -rf /var/lib/waydroid ~/.local/share/waydroid
 
 This repo doesn't include or modify the Apple Music app, and doesn't bypass its DRM. You need your own Apple Music subscription. Not affiliated with Apple.
 
+## Author and license
+
+Made by [AyushTheKingSiddha](https://github.com/AyushTheKingSiddha). © 2026, all rights reserved: free to use, but please don't re-upload it. Share a link to this repo instead. See [LICENSE](LICENSE).
+
 Credits: [Ivon's Blog](https://ivonblog.com/en-us/posts/play-apple-music-android-on-linux/) and [this gist](https://gist.github.com/sohamukute/076ff3f4a40ee5dbc9acbe226cee2b95) for the Waydroid approach.

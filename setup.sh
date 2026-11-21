@@ -1,4 +1,5 @@
 #!/bin/bash
+# Made by AyushTheKingSiddha (https://github.com/AyushTheKingSiddha). All rights reserved; see LICENSE.
 # Installs Waydroid and Apple Music 4.7.0 (lossless) on Ubuntu.
 # Usage: bash setup.sh   (run from this folder, as your normal user, not with sudo)
 set -e
