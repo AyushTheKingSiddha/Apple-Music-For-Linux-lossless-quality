@@ -1,0 +1,4 @@
+# Apple Music APKs are downloaded by each user; never commit them
+*.apk
+*.apkm
+graphify-out/
